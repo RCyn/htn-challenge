@@ -1,7 +1,11 @@
 import React from 'react';
+import { ThemeProvider } from '@material-ui/styles';
 
+import theme from '../theme';
 import useAttendeeService from '../services/useAttendeeService';
 import AttendeeAvatar from './attendeeAvatar';
+import ProfileTable from './profileTable';
+import ActionButton from './actionButton';
 
 interface Props {
   url: string;
@@ -18,12 +22,14 @@ const Profile: React.FC<Props> = ({ url }) => {
     if (service.payload === null) {
       return <div>No attendee profile found, please contact support.</div>;
     } else {
+      const attendee = service.payload;
+      const buttonText = attendee.checked_in ? "Checked In" : "Check In";
       return (
-        <div>
-          <AttendeeAvatar name={service.payload.name} url={service.payload.profile_pic} />
-          <h2>{service.payload.name}</h2>
-          ...
-        </div>
+        <React.Fragment>
+          <AttendeeAvatar name={attendee.name} url={attendee.profile_pic} type={attendee.type} checkedIn={attendee.checked_in}/>
+          <ProfileTable attendee={attendee} />
+          <ActionButton variant="contained" color="primary" disabled={attendee.checked_in}>{buttonText}</ActionButton>
+        </React.Fragment>
       );
     }
   }
