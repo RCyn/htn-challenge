@@ -1,13 +1,29 @@
 import { createMuiTheme, Theme } from '@material-ui/core';
 
-const theme: Theme = createMuiTheme({
+const MyTheme: Theme = createMuiTheme({
   typography: {
-    fontFamily: ['Lato', 'Helvetica', 'Arial', 'sans-serif'].join(','),
+    fontFamily: '"Lato", "Helvetica", "Arial", sans-serif',
+    h1: {
+      fontWeight: 500,
+      fontSize: '1.5rem',
+    },
+    h2: {
+      fontWeight: 400,
+      fontSize: '1rem',
+    },
+    body1: {
+      fontWeight: 300,
+      fontSize: '1rem',
+    },
+    body2: {
+      fontWeight: 300,
+      fontSize: '0.75rem',
+    }
   },
   palette: {
     primary: {
       light: '#417C95', // highlight
-      main: '#D9DEE3',
+      main: '#6C89A9',
       contrastText: '#202932',
     },
     secondary: {
@@ -35,4 +51,4 @@ const theme: Theme = createMuiTheme({
   },
 });
 
-export default theme;
+export default MyTheme;
