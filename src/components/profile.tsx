@@ -1,12 +1,25 @@
 import React from 'react';
+import styled from 'styled-components';
 import { ThemeProvider } from '@material-ui/styles';
+import BottomNavigation from '@material-ui/core/BottomNavigation';
 
-import theme from '../theme';
+import MyTheme from '../theme';
 import useAttendeeService from '../services/useAttendeeService';
 import AttendeeAvatar from './attendeeAvatar';
 import ProfileTable from './profileTable';
 import ActionButton from './actionButton';
 
+const Footer = styled.h1`
+  margin: 0;
+  padding-top: 16px;
+  height: 80px;
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  background-color: ${MyTheme.palette.background.default};
+`;
+
+// TODO refactor
 interface Props {
   url: string;
 }
@@ -28,7 +41,9 @@ const Profile: React.FC<Props> = ({ url }) => {
         <React.Fragment>
           <AttendeeAvatar name={attendee.name} url={attendee.profile_pic} type={attendee.type} checkedIn={attendee.checked_in}/>
           <ProfileTable attendee={attendee} />
-          <ActionButton variant="contained" color="primary" disabled={attendee.checked_in}>{buttonText}</ActionButton>
+          <Footer>
+            <ActionButton variant="contained" color="primary" disabled={attendee.checked_in}>{buttonText}</ActionButton>
+          </Footer>
         </React.Fragment>
       );
     }

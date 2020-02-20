@@ -9,6 +9,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       textAlign: "center",
+      marginTop: "56px",
       paddingTop: theme.spacing(4),
       paddingBottom: theme.spacing(2),
       backgroundColor: MyTheme.palette.primary.main
