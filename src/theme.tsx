@@ -13,11 +13,11 @@ const MyTheme: Theme = createMuiTheme({
     },
     body1: {
       fontWeight: 300,
-      fontSize: '1rem',
+      fontSize: '1.25rem',
     },
     body2: {
       fontWeight: 300,
-      fontSize: '0.75rem',
+      fontSize: '1rem',
     }
   },
   palette: {
