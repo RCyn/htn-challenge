@@ -24,6 +24,14 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+/**
+ * Component for static top bar.
+ * 
+ * no params needed, built upon Material UI's app bar
+ * 
+ * @return {React.FC}
+ */
+
 interface Props {};
 const TopBar: React.FC<Props> = ({children}) => {
   const style = useStyles();

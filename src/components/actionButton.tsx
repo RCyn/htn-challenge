@@ -46,6 +46,20 @@ const ButtonTheme: Theme = createMuiTheme({
   }
 });
 
+/**
+ * Component for primary, secondary, and external link action buttons in app.
+ * 
+ * @param variant button styles
+ * @param color button color
+ * 
+ * optional params:
+ * @param {boolean} disabled default: false
+ * @param {string} target target for external link buttons
+ * @param {string} href href for external link buttons
+ * 
+ * @return {React.FC}
+ */
+
 interface Props {
   variant: "text" | "outlined" | "contained" | undefined;
   color: "inherit" | "primary" | "secondary" | "default" | undefined;

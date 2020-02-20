@@ -214,7 +214,9 @@ const Phone: React.FC<PhoneProps> = ({ phone, canCall }) => {
 
 /**
  * constructs profile details for the attendee in list format
+ * 
  * @param {AttendeeProfile} attendee a random attendee's profile
+ * 
  * @return {List}
  */
 

@@ -30,6 +30,18 @@ const BadgeTheme: Theme = createMuiTheme({
   }
 });
 
+/**
+ * Component to display attendee avatar, name, and type.
+ * Avatar also includes a status badge.
+ * 
+ * @param {string} url path to avatar picture
+ * @param {string} name name of attendee
+ * @param {string} type type of attendee
+ * @param {boolean} checkedIn checked in statuses
+ * 
+ * @return {React.FC}
+ */
+
 interface Props {
   url: string;
   name: string;
