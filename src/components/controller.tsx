@@ -1,14 +1,15 @@
 import React from 'react';
 import styled from 'styled-components';
 import { ThemeProvider } from '@material-ui/styles';
-import BottomNavigation from '@material-ui/core/BottomNavigation';
 
 import MyTheme from '../theme';
 import useAttendeeService from '../services/useAttendeeService';
 import AttendeeAvatar from './attendeeAvatar';
 import ProfileTable from './profileTable';
 import ActionButton from './actionButton';
+import { ErrorMessage, InfoMessage } from './messageDisplay';
 
+// Footer for check-in button using styled component
 const Footer = styled.h1`
   margin: 0;
   padding-top: 16px;
@@ -19,7 +20,15 @@ const Footer = styled.h1`
   background-color: ${MyTheme.palette.background.default};
 `;
 
-// TODO refactor
+/**
+ * Controller Component for getting attendee profile and render page, 
+ * also catches different types of error and displays error message accordingly.
+ * 
+ * @param {string} url service url
+ * 
+ * @return {React.FC}
+ */
+
 interface Props {
   url: string;
 }
@@ -28,12 +37,12 @@ const Profile: React.FC<Props> = ({ url }) => {
   const service = useAttendeeService(url);
 
   if (service.status === 'loading') {
-    return <div>Loading...</div>;
+    return <InfoMessage>Loading...</InfoMessage>;
   } else if (service.status === 'error') {
-    return <div>Unexpected network error, please try again.</div>;
+    return <ErrorMessage>Unexpected network error. Please try again.</ErrorMessage>;
   } else if (service.status === 'loaded') {
     if (service.payload === null) {
-      return <div>No attendee profile found, please contact support.</div>;
+      return <ErrorMessage>No attendee profile found. Please contact support.</ErrorMessage>;
     } else {
       const attendee = service.payload;
       const buttonText = attendee.checked_in ? "Checked In" : "Check In";
@@ -49,7 +58,7 @@ const Profile: React.FC<Props> = ({ url }) => {
     }
   }
 
-  return <div>There is an unexpected error, please refresh the page.</div>;
+  return <ErrorMessage>There is an unexpected error. Please refresh the page.</ErrorMessage>;
 };
 
 export default Profile;
