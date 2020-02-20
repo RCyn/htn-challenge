@@ -13,16 +13,33 @@ import EventIcon from '@material-ui/icons/Event';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import WorkIcon from '@material-ui/icons/Work';
 import PhoneIcon from '@material-ui/icons/Phone';
+import Link from '@material-ui/core/Link';
 
+import toDateTime from '../utils/dateParser';
 import { AttendeeProfile } from '../types/attendeeProfile';
 import ActionButton from './actionButton';
 import MyTheme from '../theme';
 
-interface Props {
-  attendee: AttendeeProfile;
-}
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      position: 'relative',
+      marginBottom: theme.spacing(12),
+    },
+    nested: {
+      paddingLeft: theme.spacing(8),
+      paddingRight: theme.spacing(4),
+    },
+  }),
+);
 
-const Bio: React.FC<Props> = ({ attendee }) => {
+// dropdown list for bio
+interface BioProps {
+  bio: string;
+}
+const Bio: React.FC<BioProps> = ({ bio }) => {
+  const style = useStyles();
+
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -40,8 +57,8 @@ const Bio: React.FC<Props> = ({ attendee }) => {
       </ListItem>
       <Collapse in={open} timeout='auto' unmountOnExit>
         <List component='div' disablePadding>
-          <ListItem>
-            <ListItemText secondary={attendee.bio} />
+          <ListItem className={style.nested}>
+            <ListItemText secondary={bio} />
           </ListItem>
         </List>
       </Collapse>
@@ -50,7 +67,16 @@ const Bio: React.FC<Props> = ({ attendee }) => {
   );
 };
 
-const Workshop: React.FC<Props> = ({ attendee }) => {
+// List item to display Workshop attended,
+// with a dropdown attend workshop button
+interface WorkshopProps {
+  numAttended: number;
+  canAttend: boolean;
+}
+
+const Workshop: React.FC<WorkshopProps> = ({ numAttended, canAttend }) => {
+  const style = useStyles();
+
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -63,16 +89,20 @@ const Workshop: React.FC<Props> = ({ attendee }) => {
         <ListItemIcon>
           <EventIcon />
         </ListItemIcon>
-        <ListItemText primary='Workshops' secondary={`Attended: ${attendee.num_workshops_attended}`} />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText primary='Workshops' secondary={`Attended: ${numAttended}`} />
+        {canAttend && (
+          open ? <ExpandLess /> : <ExpandMore />
+        )}
       </ListItem>
-      <Collapse in={open} timeout='auto' unmountOnExit>
-        <List component='div' disablePadding>
-          <ListItem>
-            <ActionButton variant="outlined" color="secondary" >Attend Workshop</ActionButton>
-          </ListItem>
-        </List>
-      </Collapse>
+      {canAttend && (
+        <Collapse in={open} timeout='auto' unmountOnExit>
+          <List component='div' disablePadding>
+            <ListItem className={style.nested}>
+              <ActionButton variant="outlined" color="secondary" >Attend Workshop</ActionButton>
+            </ListItem>
+          </List>
+        </Collapse>
+      )}
       <Divider variant='inset' component='li' />
     </React.Fragment>
   );
@@ -81,7 +111,14 @@ const Workshop: React.FC<Props> = ({ attendee }) => {
 // TODO refractor: conditional on sponsor link
 // check for available actions
 
-const Sponsor: React.FC<Props> = ({ attendee }) => {
+interface SponsorProps {
+  company: string;
+  link: string;
+}
+
+const Sponsor: React.FC<SponsorProps> = ({ company, link }) => {
+  const style = useStyles();
+
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -94,23 +131,32 @@ const Sponsor: React.FC<Props> = ({ attendee }) => {
         <ListItemIcon>
           <ContactMailIcon />
         </ListItemIcon>
-        <ListItemText primary='Shifts' secondary={attendee.sponsor_company} />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText primary='Sponsor Company' secondary={company} />
+        {link !== "" && 
+          open ? <ExpandLess /> : <ExpandMore />
+        }
       </ListItem>
-      <Collapse in={open} timeout='auto' unmountOnExit>
-        <List component='div' disablePadding>
-          <ListItem>
-          <ListItemText secondary={attendee.sponsor_company_link ? attendee.sponsor_company_link : ''} />
-          </ListItem>
-        </List>
-      </Collapse>
+      {link !== "" &&
+        <Collapse in={open} timeout='auto' unmountOnExit>
+          <List component='div' disablePadding>
+            <ListItem className={style.nested}>
+              <ActionButton variant="outlined" color="secondary" target="_blank" href={link}>Open Site</ActionButton>
+            </ListItem>
+          </List>
+        </Collapse>
+      }
       <Divider variant='inset' component='li' />
     </React.Fragment>
   );
 };
 
-const Shift: React.FC<Props> = ({ attendee }) => {
-  const nextShift = attendee.next_shift ? new Date(attendee.next_shift) : "";
+// List item to display time of next shift
+interface ShiftProps {
+  nextShift: string
+}
+
+const Shift: React.FC<ShiftProps> = ({ nextShift }) => {
+  const date = new Date(nextShift);
 
   return (
     <React.Fragment>
@@ -118,14 +164,23 @@ const Shift: React.FC<Props> = ({ attendee }) => {
         <ListItemIcon>
           <WorkIcon />
         </ListItemIcon>
-        <ListItemText primary='Shifts' secondary={`Next Shift: ${nextShift.toString()}`} />
+        <ListItemText primary='Next Shift' secondary={toDateTime(date)} />
       </ListItem>
       <Divider variant='inset' component='li' />
     </React.Fragment>
   );
 };
 
-const Phone: React.FC<Props> = ({ attendee }) => {
+// list item to display phone number
+// dropdown for call phone
+interface PhoneProps {
+  phone: string;
+  canCall: boolean;
+}
+
+const Phone: React.FC<PhoneProps> = ({ phone, canCall }) => {
+  const style = useStyles();
+
   const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
@@ -138,29 +193,50 @@ const Phone: React.FC<Props> = ({ attendee }) => {
         <ListItemIcon>
           <PhoneIcon />
         </ListItemIcon>
-        <ListItemText primary='Phone Number' secondary={attendee.phone_number} />
-        {open ? <ExpandLess /> : <ExpandMore />}
+        <ListItemText primary='Phone Number' secondary={phone} />
+        {canCall &&
+          open ? <ExpandLess /> : <ExpandMore />
+        }
       </ListItem>
-      <Collapse in={open} timeout='auto' unmountOnExit>
-        <List component='div' disablePadding>
-          <ListItem>
-            <ActionButton variant="outlined" color="secondary" >Call Phone</ActionButton>
-          </ListItem>
-        </List>
-      </Collapse>
+      {canCall &&
+        <Collapse in={open} timeout='auto' unmountOnExit>
+          <List component='div' disablePadding>
+            <ListItem className={style.nested}>
+              <ActionButton variant="outlined" color="secondary" >Call Phone</ActionButton>
+            </ListItem>
+          </List>
+        </Collapse>
+      }
       <Divider variant='inset' component='li' />
     </React.Fragment>
   );
 };
 
+/**
+ * constructs profile details for the attendee in list format
+ * @param {AttendeeProfile} attendee a random attendee's profile
+ * @return {List}
+ */
+
+interface Props {
+  attendee: AttendeeProfile;
+}
+
 const ProfileTable: React.FC<Props> = ({ attendee }) => {
+  const style = useStyles();
+
+  const actions = attendee.actions;
+  const canAttendWorkshop = actions.includes("attend_workshop");
+  const canCallPhone = actions.includes("call_phone");
+  const link = attendee.sponsor_company_link ? attendee.sponsor_company_link : "";
+
   return (
-    <List>
-      {attendee.bio && <Bio attendee={attendee} />}
-      {attendee.num_workshops_attended && <Workshop attendee={attendee}/>}
-      {attendee.sponsor_company && <Sponsor attendee={attendee} />}
-      {attendee.next_shift && <Shift attendee={attendee} />}
-      {attendee.phone_number && <Phone attendee={attendee} />}
+    <List className={style.root}>
+      {attendee.bio && <Bio bio={attendee.bio} />}
+      {attendee.num_workshops_attended && <Workshop numAttended={attendee.num_workshops_attended} canAttend={canAttendWorkshop}/>}
+      {attendee.sponsor_company && <Sponsor company={attendee.sponsor_company} link={link} />}
+      {attendee.next_shift && <Shift nextShift={attendee.next_shift} />}
+      {attendee.phone_number && <Phone phone={attendee.phone_number} canCall={canCallPhone} />}
     </List>
   );
 };
