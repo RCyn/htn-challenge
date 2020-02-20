@@ -1,8 +1,24 @@
 html {
   height: 100%;
-  background-color: #EEB0AC;
+  background-color: #D9DEE3;
   font-size: 100%;
-  font-family: Roboto, sans-serif;
+  font-family: 'Lato', 'Open Sans', 'Helvetica', Helvetica, Arial, sans-serif;
+}
+
+h1 {
+  color: #202932;
+  font-size: 1.5rem;
+  font-weight: 500;
+  margin: 12px;
+  padding: 0;
+}
+
+h2 {
+  color: #2F3B48;
+  font-size: 1rem;
+  font-weight: 400;
+  margin: 8px;
+  padding: 0;
 }
 
 .App {
