@@ -99,7 +99,16 @@ const ActionButton: React.FC<Props> = ({ variant, color, children, disabled=fals
         </Button>
       </ThemeProvider>
     )
-  }
+  };
+  if (onClick) {
+    return (
+      <ThemeProvider theme={ButtonTheme} >
+        <Button variant={variant} color={color} className={style.secondary} disabled={disabled} onClick={onClick}>
+          {children}
+        </Button>
+      </ThemeProvider>
+    );
+  };
   return (
     <ThemeProvider theme={ButtonTheme} >
       <Button variant={variant} color={color} className={style.secondary} disabled={disabled}>

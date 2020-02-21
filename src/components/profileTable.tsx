@@ -76,10 +76,15 @@ const Workshop: React.FC<WorkshopProps> = ({ numAttended, canAttend }) => {
   const style = useStyles();
 
   const [open, setOpen] = React.useState(false);
+  const [numWorkshop, setNumWorkshop] = React.useState(numAttended);
 
   const handleClick = () => {
     setOpen(!open);
   };
+
+  const handleAttend = () => {
+    setNumWorkshop(numWorkshop + 1);
+  }
 
   return (
     <React.Fragment>
@@ -87,7 +92,7 @@ const Workshop: React.FC<WorkshopProps> = ({ numAttended, canAttend }) => {
         <ListItemIcon>
           <EventIcon />
         </ListItemIcon>
-        <ListItemText primary='Workshops' secondary={`Attended: ${numAttended}`} />
+        <ListItemText primary='Workshops' secondary={`Attended: ${numWorkshop}`} />
         {canAttend && (
           open ? <ExpandLess /> : <ExpandMore />
         )}
@@ -96,7 +101,7 @@ const Workshop: React.FC<WorkshopProps> = ({ numAttended, canAttend }) => {
         <Collapse in={open} timeout='auto' unmountOnExit>
           <List component='div' disablePadding>
             <ListItem className={style.nested}>
-              <ActionButton variant="outlined" color="secondary" >Attend Workshop</ActionButton>
+              <ActionButton variant="outlined" color="secondary" onClick={handleAttend}>Attend Workshop</ActionButton>
             </ListItem>
           </List>
         </Collapse>
@@ -105,9 +110,6 @@ const Workshop: React.FC<WorkshopProps> = ({ numAttended, canAttend }) => {
     </React.Fragment>
   );
 };
-
-// TODO refractor: conditional on sponsor link
-// check for available actions
 
 interface SponsorProps {
   company: string;
