@@ -56,6 +56,7 @@ const ButtonTheme: Theme = createMuiTheme({
  * @param {boolean} disabled default: false
  * @param {string} target target for external link buttons
  * @param {string} href href for external link buttons
+ * @param {Function} onClick click handler
  * 
  * @return {React.FC}
  */
@@ -66,12 +67,22 @@ interface Props {
   disabled?: boolean;
   target?: string;
   href?: string;
+  onClick?: () => void;
 }
 
-const ActionButton: React.FC<Props> = ({ variant, color, children, disabled=false, target, href }) => {
+const ActionButton: React.FC<Props> = ({ variant, color, children, disabled=false, target, href, onClick }) => {
   const style = useStyles();
 
   if (color === "primary") {
+    if (onClick) {
+      return (
+        <ThemeProvider theme={ButtonTheme} >
+          <Button variant={variant} color={color} className={style.primary} disabled={disabled} onClick={onClick}>
+            {children}
+          </Button>
+        </ThemeProvider>
+      );
+    }
     return (
       <ThemeProvider theme={ButtonTheme} >
         <Button variant={variant} color={color} className={style.primary} disabled={disabled}>
