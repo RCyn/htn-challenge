@@ -30,6 +30,11 @@ First, I broke the project into different components and features so that I can 
 
 The main feature is handling the API call to retrieve attendee profile. This can be broken down into a service function (`useAttendeeService`), implemented with **React Hooks** which maintains the status of the call, and catches all types of errors, and the display of requested profile information (`ProfilePage`), which is further broken down into smaller reusable components, such as `ActionButtons`.
 
+Since buttons are reusable, I have also implemented the __bonus__ functionality where buttons have onClick handlers
+-  `check in` button will check the attendee in, as reflected by both badge and button.
+- `attend workshop` button increments attended workshops.
+- company links are redesigned to external link buttons that opens link on new tab.
+
 I also tried to improve reusability and scalability of the code with the limited time.
 
 - Service types are extracted to templates [service.tsx](https://github.com/RCyn/htn-challenge/blob/master/src/types/service.tsx) so that all services can reuse the same status and value.
@@ -58,11 +63,14 @@ If given additional time, I would definitely start with refactoring some of my b
 
 I would possibily revisit my design to see if I can further simplify the logic while maintaining functionality. In addition, the login authentication need to be implemented with corresponding API endpoints.
 
+Getting user feedback is also important before releasing to market. Any feedback regarding user interaction flow, design, appeal, etc will make the app more functional, easier to use, and meet user needs.
+
+Last but not least, **extensive testing** is needed to ensure and maintain functionality of the app. Unit/component tests can ensure proper behavior of individual components and end to end testing is necessary for testing business logic, user flow, and complex modules of multiple components.
+
 ### Additional Functionality
 
 With all core functionality required has been implemented, I can build the app with additional functionalities.
 
-- Enable other `onClick` event handlers for `check in`, `attend workshop`, and `call phone` actions
 - Implement `search bar` for volunteers with fuzzy search on all registered attendees from database
 - Once login authentication is established with backend so that each account binds with a profile, the displayed profile is then consistent offline/across refreshes
 - **Progressive Web App**: following PWA guidelines and documentation to make the web app more reliable and offline
