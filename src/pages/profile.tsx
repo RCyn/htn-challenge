@@ -3,10 +3,10 @@ import styled from 'styled-components';
 
 import MyTheme from '../theme';
 import useAttendeeService from '../services/useAttendeeService';
-import AttendeeAvatar from './attendeeAvatar';
-import ProfileTable from './profileTable';
-import ActionButton from './actionButton';
-import { ErrorMessage, InfoMessage } from './messageDisplay';
+import AttendeeAvatar from '../components/attendeeAvatar';
+import ProfileTable from '../components/profileTable';
+import ActionButton from '../components/actionButton';
+import { ErrorMessage, InfoMessage } from '../components/messageDisplay';
 
 // Footer for check-in button using styled component
 const Footer = styled.h1`
@@ -32,7 +32,7 @@ interface Props {
   url: string;
 }
 
-const Profile: React.FC<Props> = ({ url }) => {
+const ProfilePage: React.FC<Props> = ({ url }) => {
   const service = useAttendeeService(url);
 
   if (service.status === 'loading') {
@@ -60,4 +60,4 @@ const Profile: React.FC<Props> = ({ url }) => {
   return <ErrorMessage>There is an unexpected error. Please refresh the page.</ErrorMessage>;
 };
 
-export default Profile;
+export default ProfilePage;

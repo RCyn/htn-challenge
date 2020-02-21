@@ -3,7 +3,7 @@ import { ThemeProvider } from '@material-ui/styles';
 
 import './App.css';
 import theme from './theme';
-import Controller from './components/controller';
+import ProfilePage from './pages/profile';
 import TopBar from './components/topBar';
 import LoginPage from './pages/login';
 
@@ -31,7 +31,7 @@ function App() {
       { isLoggedIn &&
         <React.Fragment>
           <TopBar>Profile</TopBar>
-          <Controller url="https://hackthenorth.netlify.com/api/fe-challenge-attendee"/>
+          <ProfilePage url="https://hackthenorth.netlify.com/api/fe-challenge-attendee"/>
         </React.Fragment>
       }
     </ThemeProvider>
