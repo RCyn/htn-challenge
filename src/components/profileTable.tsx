@@ -13,12 +13,10 @@ import EventIcon from '@material-ui/icons/Event';
 import ContactMailIcon from '@material-ui/icons/ContactMail';
 import WorkIcon from '@material-ui/icons/Work';
 import PhoneIcon from '@material-ui/icons/Phone';
-import Link from '@material-ui/core/Link';
 
 import toDateTime from '../utils/dateParser';
 import { AttendeeProfile } from '../types/attendeeProfile';
 import ActionButton from './actionButton';
-import MyTheme from '../theme';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

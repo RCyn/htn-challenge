@@ -7,9 +7,12 @@ import Controller from './components/controller';
 import TopBar from './components/topBar';
 import LoginPage from './pages/login';
 
-interface State {
-  isLoggedIn: boolean;
-}
+/**
+ * Main App: toggles between login page and attendee profile
+ * 
+ * toggle is implemented with React hook
+ * 
+ */
 
 function App() {
   const [isLoggedIn, setLogin] = React.useState(false);

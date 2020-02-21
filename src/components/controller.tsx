@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { ThemeProvider } from '@material-ui/styles';
 
 import MyTheme from '../theme';
 import useAttendeeService from '../services/useAttendeeService';
