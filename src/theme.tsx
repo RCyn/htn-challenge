@@ -38,7 +38,7 @@ const MyTheme: Theme = createMuiTheme({
       hint: '#4F6073',
     },
     background: {
-      default: '#D9DEE3',
+      default: '#EEF8FA',
     },
   },
   shape: {
